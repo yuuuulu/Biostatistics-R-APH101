@@ -4,8 +4,6 @@ format: html
 editor: visual
 ---
 
-
-
 # CLT toy exampels
 
 
@@ -131,30 +129,11 @@ hist(sample_means_n1000, main='Sample Means (n=1000)')
 
 # CI
 
-首先，我们需要从总体中抽取一个样本，并计算样本均值。 那就是根据一个样本均值一个置信区间，所以一个置信区间只有包含或者不包含两种情况（和贝叶斯的是random variable不一样） 那每个置信区间都不一样 但我们构造的是95%CI （有95%的confidence interval会包含--哪里体现了），不包含的话很可能有问题，引出假设检验如果假设了均值是xx，然后根据样本得到的置信区间不包含，说明有问题，拒绝它。
-
-## ? use CLT to construct an interval
-
 ## Intro
-
-- Even the most efficient unbiased estimator is unlikely to estimate
-population parameter exactly.
 
 -   If we were to construct a 95% confidence interval for some population characteristics (population proportion p or population mean $\mu$), we would be using a method that is successful 95% of the time.
 
 -   This is also about the question relavent to "How to choose a sample size"
-
-## margin of error
-
-For a given level of confidence c, The greatest possible
-distance between the point estimate and the value of the
-parameter it is estimating.
- 
- Sometimes called the maximum error of estimate or
-error tolerance.
-
-
-
 
 ## Interpretation
 
@@ -215,11 +194,9 @@ $t = \bar x...$
 
 -   opening: does these data (gained sleep hour) means the low dose of drugs improves the length of people's sleep?
 
-  -   Suppose $X_1,...X_n \sim^{iid}$ N$(\mu,\sigma^2)$ with both of 2 parameters unknown
+    -   Suppose $X_1,...X_n \sim^{iid}$ N$(\mu,\sigma^2)$ with both of 2 parameters unknown
 
-      -   let $t_{obs}=t(x)=\frac{\bar x - \mu _0}{s/\sqrt n}$
-        
-        
+        -   let $t_{obs}=t(x)=\frac{\bar x - \mu _0}{s/\sqrt n}$
 
 # Chi
 
@@ -382,87 +359,3 @@ $$M_x(t)=E[e^{tx}]=e^{\mu t} E[e^{\sigma t Z}]=e^{\mu t} M_Z(\sigma t)=e^{\mu t 
 ### Gamma disteibution
 
 the family of gamma distributions generalizes the family of exponential distributions. The gamma distribution with shape r and rate $\lambda$
-
-
-
-
-# ANOVA
-
-- Though its name is called " variance", it is actually a comparison among **means**
-
-## Assumptions
-
-Variable type: ANOVA requires a mix of one continuous quantitative dependent variable (which corresponds to the measurements to which the question relates) and one qualitative independent variable (with at least 2 levels which will determine the groups to compare).
-
-Independence: the data, collected from a representative and randomly selected portion of the total population, should be independent between groups and within each group. The assumption of independence is most often verified based on the design of the experiment and on the good control of experimental conditions rather than via a formal test.
-
-(If observations between samples (forming the different groups to be compared) are dependent (for example, if three measurements have been collected on the same individuals as it is often the case in medical studies when measuring a metric (i) before, (ii) during and (iii) after a treatment), the **repeated measures ANOVA** should be preferred in order to take into account the dependency between the samples.)
-
-Normality: (same idea as "sampling distribution") 
-
- - QQ-plot on the residuals.
- 
- - In the context of ANOVA, residuals correspond to the differences between the observed values and the mean of all values for that group.
- 
- - In case of small samples, residuals should follow approximately a normal distribution. The normality assumption can be tested visually thanks to a histogram and a QQ-plot, and/or formally via a normality test such as the Shapiro-Wilk or Kolmogorov-Smirnov test.
-
- - If, even after a transformation of your data (e.g., logarithmic transformation, square root, Box-Cox, etc.), the residuals still do not follow approximately a normal distribution, the Kruskal-Wallis test can be applied. This non-parametric test, robust to non normal distributions, has the same goal than the ANOVA—compare 3 or more groups—but it uses sample medians instead of sample means to compare groups.
- 
-Equality of variances
-
- - This assumption can be tested graphically (by comparing the dispersion in a boxplot or dotplot for instance), or more formally via the Levene’s test or Bartlett’s test.
-
- - If the hypothesis of equal variances is rejected, another version of the ANOVA can be used: the Welch ANOVA
-
- - Note that the Welch ANOVA does not require homogeneity of the variances, but the distributions should still follow approximately a normal distribution.
-
-
-Outliers
-
-
-
-
-## practice 
-
-```{r}
-
-library(palmerpenguins)
-# dat <- penguins %>%
-#   select(species, flipper_length_mm)
-dat <- penguins[,c("species", "flipper_length_mm")]
-str(dat)
-
-summary(dat)
-
-# see it firstly
-
-library(ggplot2)
-
-ggplot(dat) +
-  aes(x = species, y = flipper_length_mm, color = species) +
-  geom_violin(draw_quantiles=T) + geom_boxplot(width=0.3) + 
-  theme_minimal() + theme(legend.position = "none")
-
-# ?warning?
-
-# “Is the length of the flippers different between the 3 species of penguins?”.
-
-# use hypothesis testing (ANOVA)
-
-
-
-
-```
-
-Be careful that the alternative hypothesis is not that all means are different. The opposite of all means being equal (𝐻0
-) is that at least one mean is different from the others (𝐻1
-).
-
-```{r}
-TukeyHSD(mod, which ="sex:species")
-```
-
-
-## Wednesday 1-2:30
-
-
