@@ -452,6 +452,8 @@ ggplot(dat) +
 
 
 
+
+
 ```
 
 Be careful that the alternative hypothesis is not that all means are different. The opposite of all means being equal (𝐻0
@@ -460,9 +462,14 @@ Be careful that the alternative hypothesis is not that all means are different. 
 
 ```{r}
 TukeyHSD(mod, which ="sex:species")
+
+c(1,"a", TRUE)
+
+
 ```
 
 
 ## Wednesday 1-2:30
 
+### 
 
