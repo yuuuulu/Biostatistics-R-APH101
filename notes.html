@@ -273,6 +273,7 @@ window.Quarto = {
 </section>
 <section id="ci" class="level1">
 <h1>CI</h1>
+<p>首先，我们需要从总体中抽取一个样本，并计算样本均值。 那就是根据一个样本均值一个置信区间，所以一个置信区间只有包含或者不包含两种情况（和贝叶斯的是random variable不一样） 那每个置信区间都不一样 但我们构造的是95%CI （有95%的confidence interval会包含–哪里体现了），不包含的话很可能有问题，引出假设检验如果假设了均值是xx，然后根据样本得到的置信区间不包含，说明有问题，拒绝它。</p>
 <section id="use-clt-to-construct-an-interval" class="level2">
 <h2 class="anchored" data-anchor-id="use-clt-to-construct-an-interval">? use CLT to construct an interval</h2>
 </section>
@@ -384,9 +385,9 @@ window.Quarto = {
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.54</span></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>num_simulations <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>num_simulations <span class="ot">&lt;-</span> <span class="dv">50</span></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>sample_size <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>sample_size <span class="ot">&lt;-</span> <span class="dv">100</span></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">rep</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -483,6 +484,107 @@ window.Quarto = {
 <section id="gamma-disteibution" class="level3">
 <h3 class="anchored" data-anchor-id="gamma-disteibution">Gamma disteibution</h3>
 <p>the family of gamma distributions generalizes the family of exponential distributions. The gamma distribution with shape r and rate <span class="math inline">\(\lambda\)</span></p>
+</section>
+</section>
+</section>
+<section id="anova" class="level1">
+<h1>ANOVA</h1>
+<ul>
+<li>Though its name is called ” variance”, it is actually a comparison among <strong>means</strong></li>
+</ul>
+<section id="assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="assumptions">Assumptions</h2>
+<p>Variable type: ANOVA requires a mix of one continuous quantitative dependent variable (which corresponds to the measurements to which the question relates) and one qualitative independent variable (with at least 2 levels which will determine the groups to compare).</p>
+<p>Independence: the data, collected from a representative and randomly selected portion of the total population, should be independent between groups and within each group. The assumption of independence is most often verified based on the design of the experiment and on the good control of experimental conditions rather than via a formal test.</p>
+<p>(If observations between samples (forming the different groups to be compared) are dependent (for example, if three measurements have been collected on the same individuals as it is often the case in medical studies when measuring a metric (i) before, (ii) during and (iii) after a treatment), the <strong>repeated measures ANOVA</strong> should be preferred in order to take into account the dependency between the samples.)</p>
+<p>Normality: (same idea as “sampling distribution”)</p>
+<ul>
+<li><p>QQ-plot on the residuals.</p></li>
+<li><p>In the context of ANOVA, residuals correspond to the differences between the observed values and the mean of all values for that group.</p></li>
+<li><p>In case of small samples, residuals should follow approximately a normal distribution. The normality assumption can be tested visually thanks to a histogram and a QQ-plot, and/or formally via a normality test such as the Shapiro-Wilk or Kolmogorov-Smirnov test.</p></li>
+<li><p>If, even after a transformation of your data (e.g., logarithmic transformation, square root, Box-Cox, etc.), the residuals still do not follow approximately a normal distribution, the Kruskal-Wallis test can be applied. This non-parametric test, robust to non normal distributions, has the same goal than the ANOVA—compare 3 or more groups—but it uses sample medians instead of sample means to compare groups.</p></li>
+</ul>
+<p>Equality of variances</p>
+<ul>
+<li><p>This assumption can be tested graphically (by comparing the dispersion in a boxplot or dotplot for instance), or more formally via the Levene’s test or Bartlett’s test.</p></li>
+<li><p>If the hypothesis of equal variances is rejected, another version of the ANOVA can be used: the Welch ANOVA</p></li>
+<li><p>Note that the Welch ANOVA does not require homogeneity of the variances, but the distributions should still follow approximately a normal distribution.</p></li>
+</ul>
+<p>Outliers</p>
+</section>
+<section id="practice" class="level2">
+<h2 class="anchored" data-anchor-id="practice">practice</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># dat &lt;- penguins %&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   select(species, flipper_length_mm)</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> penguins[,<span class="fu">c</span>(<span class="st">"species"</span>, <span class="st">"flipper_length_mm"</span>)]</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [344 × 2] (S3: tbl_df/tbl/data.frame)
+ $ species          : Factor w/ 3 levels "Adelie","Chinstrap",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ flipper_length_mm: int [1:344] 181 186 195 NA 193 190 181 195 193 190 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      species    flipper_length_mm
+ Adelie   :152   Min.   :172.0    
+ Chinstrap: 68   1st Qu.:190.0    
+ Gentoo   :124   Median :197.0    
+                 Mean   :200.9    
+                 3rd Qu.:213.0    
+                 Max.   :231.0    
+                 NA's   :2        </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># see it firstly</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> flipper_length_mm, <span class="at">color =</span> species) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">draw_quantiles=</span>T) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.3</span>) <span class="sc">+</span> </span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite outside the scale range
+(`stat_ydensity()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite outside the scale range
+(`stat_boxplot()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="notes_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ?warning?</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># “Is the length of the flippers different between the 3 species of penguins?”.</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># use hypothesis testing (ANOVA)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Be careful that the alternative hypothesis is not that all means are different. The opposite of all means being equal (𝐻0 ) is that at least one mean is different from the others (𝐻1 ).</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(mod, <span class="at">which =</span><span class="st">"sex:species"</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>,<span class="st">"a"</span>, <span class="cn">TRUE</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="glm" class="level1">
+<h1>GLM</h1>
+<p>essentials</p>
+<p><img src="images/clipboard-1008509295.png" class="img-fluid"></p>
+<section id="random-component-exponential-family-density" class="level2">
+<h2 class="anchored" data-anchor-id="random-component-exponential-family-density">random component (exponential family density)</h2>
+<p><span class="math inline">\(f(y;\theta;\phi)=\exp(\frac{y \theta-b(\theta)}{a(\phi)}+c(y,\phi))\)</span></p>
+<section id="eg-of-linear-regression" class="level3">
+<h3 class="anchored" data-anchor-id="eg-of-linear-regression">eg of linear regression</h3>
+<p>g(<span class="math inline">\(\mu\)</span>)=<span class="math inline">\(\mu\)</span></p>
+</section>
+<section id="eg-of-logistic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="eg-of-logistic-regression">eg of logistic regression</h3>
 </section>
 </section>
 </section>

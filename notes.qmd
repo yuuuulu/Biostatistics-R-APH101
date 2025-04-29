@@ -4,10 +4,7 @@ format: html
 editor: visual
 ---
 
-
-
 # CLT toy exampels
-
 
 ```{r}
 library(ggplot2)
@@ -137,8 +134,7 @@ hist(sample_means_n1000, main='Sample Means (n=1000)')
 
 ## Intro
 
-- Even the most efficient unbiased estimator is unlikely to estimate
-population parameter exactly.
+-   Even the most efficient unbiased estimator is unlikely to estimate population parameter exactly.
 
 -   If we were to construct a 95% confidence interval for some population characteristics (population proportion p or population mean $\mu$), we would be using a method that is successful 95% of the time.
 
@@ -146,15 +142,9 @@ population parameter exactly.
 
 ## margin of error
 
-For a given level of confidence c, The greatest possible
-distance between the point estimate and the value of the
-parameter it is estimating.
- 
- Sometimes called the maximum error of estimate or
-error tolerance.
+For a given level of confidence c, The greatest possible distance between the point estimate and the value of the parameter it is estimating.
 
-
-
+Sometimes called the maximum error of estimate or error tolerance.
 
 ## Interpretation
 
@@ -180,46 +170,33 @@ $\hat p= (\hat p -  , \hat p + 1.96)$
 
 ![](images/clipboard-3637074733.png)
 
+-   sample size question
 
-- sample size question
-
-
-using sample proportion with 95% confidence
-interval, and we want ME no more than 5%, we may be
-interested in solving n from the following equation:
+using sample proportion with 95% confidence interval, and we want ME no more than 5%, we may be interested in solving n from the following equation:
 
 0.05=1.96 $\sqrt {\frac {\hat p(1-\hat p) }{ n}}$
 
 #### Mean
 
-- $\sigma$ known 
+-   $\sigma$ known
 
 n $\ge 30$
 
+-   $\sigma$ unknown --- Use s as the estimate for σ (t-statistics with df )
 
-- $\sigma$ unknown --- Use s as the estimate for σ (t-statistics with df )
-
-Assumption: The population distribution is normal. (Remark:This assumption is not critical if the sample size is large, but it is
-important when the sample size is small.)
-
+Assumption: The population distribution is normal. (Remark:This assumption is not critical if the sample size is large, but it is important when the sample size is small.)
 
 (t-statistics with df=n-1)
 
 $t = \bar x...$
 
-
-
-
-
 # Hypothesis testing
 
 -   opening: does these data (gained sleep hour) means the low dose of drugs improves the length of people's sleep?
 
-  -   Suppose $X_1,...X_n \sim^{iid}$ N$(\mu,\sigma^2)$ with both of 2 parameters unknown
+-   Suppose $X_1,...X_n \sim^{iid}$ N$(\mu,\sigma^2)$ with both of 2 parameters unknown
 
-      -   let $t_{obs}=t(x)=\frac{\bar x - \mu _0}{s/\sqrt n}$
-        
-        
+    -   let $t_{obs}=t(x)=\frac{\bar x - \mu _0}{s/\sqrt n}$
 
 # Chi
 
@@ -270,9 +247,9 @@ population_size <- 12141897
 
 p <- 0.54
 
-num_simulations <- 500
+num_simulations <- 50
 
-sample_size <- 1000
+sample_size <- 100
 
 rep()
 p_hat_values <- replicate(num_simulations, {
@@ -383,12 +360,9 @@ $$M_x(t)=E[e^{tx}]=e^{\mu t} E[e^{\sigma t Z}]=e^{\mu t} M_Z(\sigma t)=e^{\mu t 
 
 the family of gamma distributions generalizes the family of exponential distributions. The gamma distribution with shape r and rate $\lambda$
 
-
-
-
 # ANOVA
 
-- Though its name is called " variance", it is actually a comparison among **means**
+-   Though its name is called " variance", it is actually a comparison among **means**
 
 ## Assumptions
 
@@ -398,31 +372,27 @@ Independence: the data, collected from a representative and randomly selected po
 
 (If observations between samples (forming the different groups to be compared) are dependent (for example, if three measurements have been collected on the same individuals as it is often the case in medical studies when measuring a metric (i) before, (ii) during and (iii) after a treatment), the **repeated measures ANOVA** should be preferred in order to take into account the dependency between the samples.)
 
-Normality: (same idea as "sampling distribution") 
+Normality: (same idea as "sampling distribution")
 
- - QQ-plot on the residuals.
- 
- - In the context of ANOVA, residuals correspond to the differences between the observed values and the mean of all values for that group.
- 
- - In case of small samples, residuals should follow approximately a normal distribution. The normality assumption can be tested visually thanks to a histogram and a QQ-plot, and/or formally via a normality test such as the Shapiro-Wilk or Kolmogorov-Smirnov test.
+-   QQ-plot on the residuals.
 
- - If, even after a transformation of your data (e.g., logarithmic transformation, square root, Box-Cox, etc.), the residuals still do not follow approximately a normal distribution, the Kruskal-Wallis test can be applied. This non-parametric test, robust to non normal distributions, has the same goal than the ANOVA—compare 3 or more groups—but it uses sample medians instead of sample means to compare groups.
- 
+-   In the context of ANOVA, residuals correspond to the differences between the observed values and the mean of all values for that group.
+
+-   In case of small samples, residuals should follow approximately a normal distribution. The normality assumption can be tested visually thanks to a histogram and a QQ-plot, and/or formally via a normality test such as the Shapiro-Wilk or Kolmogorov-Smirnov test.
+
+-   If, even after a transformation of your data (e.g., logarithmic transformation, square root, Box-Cox, etc.), the residuals still do not follow approximately a normal distribution, the Kruskal-Wallis test can be applied. This non-parametric test, robust to non normal distributions, has the same goal than the ANOVA—compare 3 or more groups—but it uses sample medians instead of sample means to compare groups.
+
 Equality of variances
 
- - This assumption can be tested graphically (by comparing the dispersion in a boxplot or dotplot for instance), or more formally via the Levene’s test or Bartlett’s test.
+-   This assumption can be tested graphically (by comparing the dispersion in a boxplot or dotplot for instance), or more formally via the Levene’s test or Bartlett’s test.
 
- - If the hypothesis of equal variances is rejected, another version of the ANOVA can be used: the Welch ANOVA
+-   If the hypothesis of equal variances is rejected, another version of the ANOVA can be used: the Welch ANOVA
 
- - Note that the Welch ANOVA does not require homogeneity of the variances, but the distributions should still follow approximately a normal distribution.
-
+-   Note that the Welch ANOVA does not require homogeneity of the variances, but the distributions should still follow approximately a normal distribution.
 
 Outliers
 
-
-
-
-## practice 
+## practice
 
 ```{r}
 
@@ -456,11 +426,9 @@ ggplot(dat) +
 
 ```
 
-Be careful that the alternative hypothesis is not that all means are different. The opposite of all means being equal (𝐻0
-) is that at least one mean is different from the others (𝐻1
-).
+Be careful that the alternative hypothesis is not that all means are different. The opposite of all means being equal (𝐻0 ) is that at least one mean is different from the others (𝐻1 ).
 
-```{r}
+```r
 TukeyHSD(mod, which ="sex:species")
 
 c(1,"a", TRUE)
@@ -468,8 +436,28 @@ c(1,"a", TRUE)
 
 ```
 
+# GLM 
 
-## Wednesday 1-2:30
 
-### 
+
+essentials
+
+![](images/clipboard-1008509295.png)
+
+## random component (exponential family density)
+
+$f(y;\theta;\phi)=\exp(\frac{y \theta-b(\theta)}{a(\phi)}+c(y,\phi))$
+
+
+
+
+### eg of linear regression
+
+
+g($\mu$)=$\mu$
+
+
+
+### eg of logistic regression
+
 
