@@ -2,4 +2,4 @@
 
 This repository contains a report in PDF format. You can download it from the links below:
 
-- [Download Report PDF (Biostatistics-R-APH101)](Biostat-and-R-Notes.pdf.pdf)
+- https://github.com/yuuuulu/Biostatistics-R-APH101/blob/main/Biostat-and-R-Notes.pdf
